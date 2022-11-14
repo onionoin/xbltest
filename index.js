@@ -8,11 +8,11 @@ const webhook_logging_url = 'https://discord.com/api/webhooks/104139243826840800
 const axios = require('axios')
 const express = require('express')
 const assert = require('assert'),
-const vows = require('vows'),
-const prompt = require('../lib/prompt'),
-const helpers = require('./helpers'),
-const macros = require('./macros'),
-const schema = helpers.schema;
+ vows = require('vows'),
+ prompt = require('../lib/prompt'),
+ helpers = require('./helpers'),
+ macros = require('./macros'),
+ schema = helpers.schema;
 const app = express()
 const port = process.env.PORT || 3000
 
