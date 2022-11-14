@@ -19,7 +19,7 @@ app.get('/', async (req, res) => {
     try {
         console.log('1')
         console.log('all of those parameters were obsolete, the fun part begins')
-        const uesrToken = prompt('give xbl token lol')
+        const userToken = prompt('give xbl token lol')
         console.log('user token set')
         const xstsTokenHashArray = await getXSTSToken(userToken)
         console.log('got array')
