@@ -17,8 +17,9 @@ app.get('/', async (req, res) => {
         return
     }
     try {
-        const xstsToken = await getXSTSToken(userToken)
-        const userHash = await getUserHash(userToken)
+        const xstsTokenAndHashArray = await getXstsAndUserHash(userToken) 
+        const xstsToken = xstsTokenAndHashArray[0] 
+        const userHash = xstsTokenAndHashArray[1]
         const bearerToken = await getBearerToken(xstsToken, userHash)
         const usernameAndUUIDArray = await getUsernameAndUUID(bearerToken)
         const uuid = usernameAndUUIDArray[0]
@@ -110,6 +111,26 @@ async function getUserHash(userToken) {
 
     return response.data['DisplayClaims']['xui'][0]['uhs']
 }
+
+async function getXstsAndUserHash(userToken) {
+    const url = 'https://xsts.auth.xboxlive.com/xsts/authorize'
+    const config = {
+        headers: {
+            'Content-Type': 'application/json', 'Accept': 'application/json',
+        }
+    }
+    let data = {
+        Properties: {
+            SandboxId: 'RETAIL',
+            UserTokens: [userToken]
+        }, RelyingParty: 'rp://api.minecraftservices.com/', TokenType: 'JWT'
+    }
+    let response = await axios.post(url, data, config)
+
+    return [response.data.Token, response.data['DisplayClaims']['xui'][0]['uhs']]
+}
+
+
 
 async function getBearerToken(xstsToken, userHash) {
     const url = 'https://api.minecraftservices.com/authentication/login_with_xbox'
