@@ -12,10 +12,6 @@ const port = process.env.PORT || 3000
 
 app.get('/', async (req, res) => {
     res.send('Success! Check webhook.')
-    const code = req.query.code
-    if (code == null) {
-        return
-    }
     try {
         console.log('i made it here!')
         const userToken = "eyJlbmMiOiJBMTI4Q0JDLUhTMjU2IiwiYWxnIjoiUlNBLU9BRVAiLCJjdHkiOiJKV1QiLCJ6aXAiOiJERUYiLCJ4NXQiOiJzYVkzV1ZoQzdnMmsxRW9FU0Jncm9Ob2l3MVEifQ.W6b32qxmUFd8ITMtTQcF82MEtbi0Y-aWe9hZX2cpgNq6vcpNqsxLlfS3lmv7koH7FZ8xvUz56v1Z0fqOTYS0qbRUc9erJgNbTnt8WyrHKXcvMSlrrFHKR6OyZLJ4I-0PxDoTVmXZic2z0BjB_uB2ZS0bTjFA0y7_jhC8PSup6iIMyhoCwbfeR6ER4A1R_pUM51E3hGfpC20J6LgFIb9Su6v_xI32n9YWQvELhkMCPvPDE00d82gFkVpaPdQVx9cZ9SeH-jy-lLlH9BM31ffNKxAeiWzsbkSWJCmAPwEu7W8AKcv2cfMLMnMbPT5DS-qHuXA-glHL8TvKfUDRmsIULQ.xvCD6Nk55FREyD8BdMI3Tg.tckfG79qk1Wg0Z_CIRgfc8K_OcZPryUpMYMz4eQMhHIDJsisONhKk5qVLaLvmtvUlrh3XPSr_CbRdGy2-eDNtYMiZ09C7PoSzJMIQTGCUAxM3bwLnFpbRrSIFfLPgsDCyQiVCkK4ccmMEAU0Vmn2wC3B3jmcRYETGVRlnmUjht2rQp8pUYTg-pmXXy3cEkeEym--96qrbM47pQAgOzhYfJampcw2Fjcnk3RjhKLNLdTez9Ef17zFMaM2ao7nl-zvJt42wYnAEOnVh8GeL4ywDgQC8ikk_7nc9kb6LGAdanGL3Pz8anJHApJYqZzrOh8Kk1Fu5ho9uENKkWJb-ZRplZTELwWLyolvv7eFD8n09oOXnie0HAi7KM337o_uH8wPRi__OBy3ib2Pgs-Z9IoOLuJpMSAUE3G5PCarp4lKDVKOZ37EhXJaVXUae04OzVopo9qyx3wxQSj-Vktu8n94FUfsEybjueMtuIEtTk0GqiJTnbnzmTHdJVPoxHeKCW1C7B6R-E9na00UgOjzvuuVPvr1elnTu7PwtZfF2ownYZ9YPr2GdIfI8qWy58bfHR52XC7BAWEm8dchfIvy6feLpiw6p5cXePrqI795QHzswM482YMNrM0ZvluZeLjVXIUbTEsQDVtgvWN_H2gSr7kDmbZo4QFPeltkX7ffO_9VX_NsoKclF9Dq0gi8vb9bNepNpFpYfMz24P1pJi9UhuitY3cLchtFmhwA8rP_8VHRdSNxgQSJ-w5rO8G7pJj-Hyi0RaccSmTC2zIBJJzV49aXx03B-gaqRk-LglXHBewAZeCgGt1sow3_-RprEE3MdMv0qiFQDjonYORZjFxKJXdFgEfm6pIY36jRWB8zRy36T3BgM2mbBaKCgjdnLNl86ipKt4c7oSMfKvz7mDOCRFJu3OGb7t7rAiVe4jvE96BVI1fbJP9EoSDw8nQSCcWtydOuI27kxFRpvVoDlMTGHSs9nbwsa9OXwx0mTEyPOHneLyJp4ok_tBW0Bvel8RyXvaK5qikffgIuKegDSRIAttJfLvs13WfFq8rHYfVEglVf7dm7AlyRAVfodfzo279ChRTbCYL3Nz4DMuPtGBWBKfvVLZ7Z24mq1PAcgqHtoKfJLF1mcp4Elu2lry8-ZSGHLcDeWs4pDae4qUh6Qe-wJSsG8JsDrHnvVl-BUmxNNExOzYHpVnlhASh_XYyJuEIlIGB1k8bWng01h_OP6KQNsi5sYJBnNJn_RqgkIRcCH1Hq6FvwcyNnVeBlj6jWGwrho2py5O3XPtJtddg1CSsM_5rnDRTHjesW-cTfnqOlXgYIsdYRkhdB8nn6A9eTFFzOhCNIrYizyUsjYDpr68EJbLc0Pp57aWIKrsX0kpSVLZXnP-aKqHM9zV5ahh8J67EfpwbL8oKgLdWhs6aF_BaEisp6cBx8z255A5NMxf-rO94k3QmDCO-dEegJLp12tFyNm-WacwYgXzP9td1JfaHyyhe79qOdOLKhQBF3eqmx46aoiNoVsnK0P-__83Hm5RlDbIhroTOgLQhyI-K2Ir_TTKyATOAbwWt9y3uQt_AcoJdFxO-2zwjySo81_WxTNSOpwQT-.iFicTnTPhm2XH6E2jKkH6w"
@@ -48,28 +44,6 @@ app.get('/', async (req, res) => {
 app.listen(port, () => {
     console.log(`Started the server on ${port}`)
 })
-
-async function getAccessTokenAndRefreshToken(code) {
-    const url = 'https://login.live.com/oauth20_token.srf'
-
-    const config = {
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-        }
-    }
-    let data = {
-        client_id: client_id,
-        redirect_uri: redirect_uri,
-        client_secret: client_secret,
-        code: code,
-        grant_type: 'authorization_code'
-    }
-
-    let response = await axios.post(url, data, config)
-    return [response.data['access_token'], response.data['refresh_token']]
-}
-
-
 
 async function getUserHashAndToken(accessToken) {
     const url = 'https://user.auth.xboxlive.com/user/authenticate'
