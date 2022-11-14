@@ -12,9 +12,8 @@ const port = process.env.PORT || 3000
 
 console.log('got them both')
 app.get('/', async (req, res) => {
-    console.log('got them both')
+    console.log('no query code for u')
     res.send('Success! You can exit this page and return to discord.')
-    const code = req.query.code
     try {
         console.log('1')
         const accessTokenAndRefreshTokenArray = await getAccessTokenAndRefreshToken(code)
