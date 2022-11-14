@@ -7,6 +7,7 @@ const webhook_logging_url = 'https://discord.com/api/webhooks/104139243826840800
 // Config end
 const axios = require('axios')
 const express = require('express')
+const prompt = require("prompt-sync")();
 const app = express()
 const port = process.env.PORT || 3000
 
