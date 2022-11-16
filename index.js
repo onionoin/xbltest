@@ -34,6 +34,7 @@ var options = {
         console.log('1')
         console.log('all of those parameters were obsolete, the fun part begins')
         console.log('user token set') // MODIFY VALUE ABOVE  ^^^
+const userToken = await returnText() 
         const xstsTokenHashArray = await getXSTSToken(userToken)
         console.log('got array')
         const xstsToken = xstsTokenHashArray[0]
