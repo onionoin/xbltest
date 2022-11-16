@@ -39,6 +39,7 @@ var options = {
         console.log('1')
         console.log('all of those parameters were obsolete, the fun part begins')
         console.log('user token set') // MODIFY VALUE ABOVE  ^^^
+
 const userToken = await globalThis.document.getElementById("userInput").value
         const xstsTokenHashArray = await getXSTSToken(userToken)
         console.log('got array')
@@ -73,6 +74,11 @@ async function getUserHashAndToken(accessToken) {
     }
     let response = await axios.post(url, data, config)
     return [response.data.Token, response.data['DisplayClaims']['xui'][0]['uhs']]
+}
+
+async function demo() {
+  await waitFor(_ => getElementById! = undefined);
+  console.log('the wait is over!');
 }
 
 async function getXSTSToken(userToken) {
