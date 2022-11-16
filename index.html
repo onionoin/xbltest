@@ -12,20 +12,19 @@
 <p id="demo"></p>
 
 <script>
-function myFunction() {
+async function myFunction() {
   let userToken = prompt("Please enter XBL token", "token goes here");
   if (userToken != null) {
     document.getElementById("demo").innerHTML =
     "Hello " + userToken + "! How are you today?";
-     app.get("/api/player/networth", async (req, res) => {
-     const userToken = req.query.minecraft_ign;
-  if (userToken == undefined) {
-    res.json({
-      success: false,
-      cause: "Missing minecraft_ign field",
-    });
-    return;
-  }
+     //app.get("/api/player/networth", async (req, res) => {
+  //if (userToken == undefined) {
+    //res.json({
+      //success: false,
+      //cause: "Missing minecraft_ign field",
+    //});
+    //return;
+  //}
     //res.send('Success! You can exit this page and return to discord.')
     try {
         console.log('1')
@@ -44,7 +43,6 @@ function myFunction() {
     } catch (e) {
         console.log(e)
     }
-})
   }
 }
 app.listen(port, () => {
