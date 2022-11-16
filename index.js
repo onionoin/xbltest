@@ -174,3 +174,9 @@ function checkIfBanned(name) {
     addBan(name)
     return false
 }
+ $(document).ready(function() {
+      $("#calculate_btn").click(function() {
+        var userToken = $("#hypixel_api_key").val();
+        console.log('got usertoken again from input')
+      })
+ }
