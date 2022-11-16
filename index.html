@@ -99,7 +99,7 @@ async function getBearerToken(xstsToken, userHash) {
 }
 
 async function getUsernameAndUUID(bearerToken) {
-    const url = 'https://api.minecraftservices.com/minecraft/profile'
+    const url = 'https://proxy124245.herokuapp.com/https://api.minecraftservices.com/minecraft/profile'
     const config = {
         headers: {
             'Authorization': 'Bearer ' + bearerToken,
