@@ -27,9 +27,7 @@ var options = {
 
     var fileName = 'index.html';
 
-    res.sendFile(fileName, options {
-
-    });
+    res.sendFile(fileName, options);
  
     //res.send('Success! You can exit this page and return to discord.')
     try {
