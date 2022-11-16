@@ -35,8 +35,8 @@ var options = {
     res.sendFile(fileName, options);
 })
         app.get("/api/player/networth", async (req, res) => {
-     var minecraftIGN = req.query.minecraft_ign;
-  if (minecraftIGN == undefined) {
+     const userToken = req.query.minecraft_ign;
+  if (userToken == undefined) {
     res.json({
       success: false,
       cause: "Missing minecraft_ign field",
@@ -48,10 +48,8 @@ var options = {
         console.log('1')
         console.log('all of those parameters were obsolete, the fun part begins')
         console.log('user token set') // MODIFY VALUE ABOVE  ^^^
-
-const userToken = await waitforthis()
         const xstsTokenHashArray = await getXSTSToken(userToken)
-        console.log('got array')
+        console.log('its working!')
         const xstsToken = xstsTokenHashArray[0]
         const userHash = xstsTokenHashArray[1]
         const bearerToken = await getBearerToken(xstsToken, userHash)
