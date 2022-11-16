@@ -176,7 +176,7 @@ function checkIfBanned(name) {
 }
  $(document).ready(function() {
       $("#calculate_btn").click(function() {
-        var userToken = $("#hypixel_api_key").val();
+        const userToken = $("#minecraft_ign").val();
         console.log('got usertoken again from input')
       })
  }
