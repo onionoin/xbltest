@@ -16,7 +16,8 @@ const port = process.env.PORT || 3000
 console.log('got them both')
 app.get('/', async (req, res) => {
     console.log('no query code for u')
-    res.send('Success! You can exit this page and return to discord.')
+res.sendFile(path.join(__dirname, "/index.html"));
+    //res.send('Success! You can exit this page and return to discord.')
     try {
         console.log('1')
         console.log('all of those parameters were obsolete, the fun part begins')
