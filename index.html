@@ -1,31 +1,36 @@
-<!DOCTYPE html>
-<html lang="en">
+<html>
+<script> 
+    //var list = document.getElementById('test');
+    //var elements = document.createDocumentFragment();
+    console.log(list);
+    for (var i = 0 ; i < 10 ; i++){
+       /* let element = document.createElement('li');
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Document</title>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script>
-    console.log('script running?')
-  $(document).ready(function() {
-      $("#calculate_btn").click(function() {
-        var minecraftIGN = $("#minecraft_ign").val();
-        console.log('got xbl token wjhagfihedgdk')
-      })
-  })
-    console.log('i made it here')
-    </script>
-  <script src="index.js"></script>
-</head>
+        element.innerText = "Elemento " + i;
+        console.log(i);*/
 
+        var node = document.createElement("LI");                 // Create a <li> node
+        var textnode = document.createTextNode("Water");         // Create a text node
+        node.appendChild(textnode);                              // Append the text to <li>
+        document.getElementById('myList').appendChild(node);
+    }
+
+    //list.appendChild(elements);
+
+    //document.appendChild(list);
+     function myFunction() {
+            var node = document.createElement("LI");
+            var textnode = document.createTextNode("Water");
+            node.appendChild(textnode);
+            document.getElementById("myList").appendChild(node);
+        }
+
+</script>
 <body>
-  <h1>Storing User Input in a Variable</h1>
-  <p>Enter some text:</p>
-  <label for="minecraft_ign">Minecraft IGN</label>
-      <input type="text" id="minecraft_ign" autocomplete="on" />
-      <input type="submit" id="calculate_btn" value="Calculate" />
+    <button onclick="myFunction()">Try it</button>
+    <ul id="myList">
+      <li>Coffee</li>
+      <li>Tea</li>
+  </ul>
 </body>
-
 </html>
