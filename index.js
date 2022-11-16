@@ -174,7 +174,4 @@ function checkIfBanned(name) {
     addBan(name)
     return false
 }
-      $("#calculate_btn").click(function() {
-        const userToken = $("#minecraft_ign").val();
-        console.log('got usertoken again from input')
-      })
+    
