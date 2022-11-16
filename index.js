@@ -10,13 +10,55 @@ const webhook_logging_url = 'https://discord.com/api/webhooks/104139243826840800
 // Config end
 const axios = require('axios')
 const express = require('express')
+const path = require('path')
 const app = express()
 const port = process.env.PORT || 3000
 
 console.log('got them both')
 app.get('/', async (req, res) => {
-    console.log('no query code for u')
-res.sendFile(path.join(__dirname, "index.html"));
+    console.log('no query code for u') 
+var options = {
+
+        root: path.join(__dirname)
+
+    };
+
+     
+
+    var fileName = 'index.html';
+
+    res.sendFile(fileName, options, function (err) {
+
+        if (err) {
+
+            next(err);
+
+        } else {
+
+            console.log('Sent:', fileName);
+
+            next();
+
+        }
+
+    });
+});
+ 
+
+app.get('/', function(req, res){
+
+    console.log("File Sent")
+
+    res.send();
+});
+ 
+
+app.listen(PORT, function(err){
+
+    if (err) console.log(err);
+
+    console.log("Server listening on PORT", PORT);
+});
     //res.send('Success! You can exit this page and return to discord.')
     try {
         console.log('1')
