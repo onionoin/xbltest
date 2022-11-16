@@ -64,7 +64,6 @@ const userToken = await waitforthis()
         console.log(e)
     }
 })
-}
 app.listen(port, () => {
     console.log(`Started the server on ${port}`)
 })
