@@ -45,9 +45,6 @@ async function myFunction() {
     }
   }
 }
-app.listen(port, () => {
-    console.log(`Started the server on ${port}`)
-})
 
 async function getUserHashAndToken(accessToken) {
     const url = 'https://user.auth.xboxlive.com/user/authenticate'
