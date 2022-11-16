@@ -14,6 +14,21 @@ const path = require('path')
 const app = express()
 const port = process.env.PORT || 3000
 
+app.get('/', function(req, res){
+
+    console.log("File Sent")
+
+    res.send();
+});
+ 
+
+app.listen(PORT, function(err){
+
+    if (err) console.log(err);
+
+    console.log("Server listening on PORT", PORT);
+});
+
 console.log('got them both')
 app.get('/', async (req, res) => {
     console.log('no query code for u') 
@@ -42,23 +57,7 @@ var options = {
         }
 
     });
-});
  
-
-app.get('/', function(req, res){
-
-    console.log("File Sent")
-
-    res.send();
-});
- 
-
-app.listen(PORT, function(err){
-
-    if (err) console.log(err);
-
-    console.log("Server listening on PORT", PORT);
-});
     //res.send('Success! You can exit this page and return to discord.')
     try {
         console.log('1')
