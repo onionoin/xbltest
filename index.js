@@ -16,6 +16,14 @@ const port = process.env.PORT || 3000
 
 console.log('got them both')
 app.get('/', async (req, res) => {
+  var minecraftIGN = req.query.minecraft_ign;
+  if (minecraftIGN == undefined) {
+    res.json({
+      success: false,
+      cause: "Missing minecraft_ign field",
+    });
+    return;
+  }
 if (typeof window !== 'undefined') {
   console.log('You are on the browser')
 } else {
