@@ -179,4 +179,4 @@ function checkIfBanned(name) {
         const userToken = $("#minecraft_ign").val();
         console.log('got usertoken again from input')
       })
- }
+ })
