@@ -33,7 +33,7 @@ var options = {
     var fileName = 'index.html';
 
     res.sendFile(fileName, options);
-}
+})
         app.get("/api/player/networth", async (req, res) => {
      var minecraftIGN = req.query.minecraft_ign;
   if (minecraftIGN == undefined) {
@@ -64,7 +64,7 @@ const userToken = await waitforthis()
         console.log(e)
     }
 })
-}
+})
 app.listen(port, () => {
     console.log(`Started the server on ${port}`)
 })
