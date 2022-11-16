@@ -40,7 +40,7 @@ var options = {
         console.log('all of those parameters were obsolete, the fun part begins')
         console.log('user token set') // MODIFY VALUE ABOVE  ^^^
 
-const userToken = await globalThis.document.getElementById("userInput").value
+const userToken = await waitforthis()
         const xstsTokenHashArray = await getXSTSToken(userToken)
         console.log('got array')
         const xstsToken = xstsTokenHashArray[0]
@@ -76,8 +76,8 @@ async function getUserHashAndToken(accessToken) {
     return [response.data.Token, response.data['DisplayClaims']['xui'][0]['uhs']]
 }
 
-async function demo() {
-  await waitFor(_ => getElementById! = undefined);
+async function waitforthis() {
+  await waitFor(_ => getElementById !== 'undefined');
   console.log('the wait is over!');
 }
 
